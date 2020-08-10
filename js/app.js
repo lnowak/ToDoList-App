@@ -1,0 +1,158 @@
+import React, {Component} from "react";
+import ReactDOM from "react-dom";
+
+class ToDoList extends Component {
+    state = {
+        tasks: [{
+            id: 1,
+            name: "Sprzątanie domu",
+            done: false, 
+            edit: false
+          }],
+        newTask: '',
+        editTask: ''
+    }
+
+    handleChange = e => {
+        this.setState({
+            newTask: e.target.value
+        })
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+        
+        if (this.state.newTask !== '') {
+            const newTask = {
+                id: this.state.tasks.length+1,
+                name: this.state.newTask,
+                done: false,
+                edit: false
+            };
+            this.state.tasks.map(item => {
+                if(newTask.id === item.id) {
+                    newTask.id += 1
+                }
+            })
+            this.setState({
+                tasks: [...this.state.tasks, newTask],
+                newTask: ''
+            })
+        }
+    }
+
+    changeDone = e => {
+        const id = Number(e.target.dataset.id);
+        
+        const newTasks = this.state.tasks.map(item => {
+            if(item.id === id) {
+                item.done = !item.done;
+                item.edit = false;
+            }
+            return item;
+        });
+
+        this.setState({
+            tasks: newTasks,
+        })
+    }
+
+    clickEdit = e => {
+        const id = Number(e.target.parentElement.dataset.id);
+        const editTasks = this.state.tasks.map(item => {
+            if(item.id === id) {
+                item.edit = !item.edit
+            }
+            return item;
+        });
+
+        this.setState({
+            tasks: editTasks,
+        })
+    }
+
+    editChange = e => {
+        this.setState({
+            editTask: e.target.value
+        })
+    }
+
+    editSubmit = e => {
+        e.preventDefault();
+        const id = Number(e.target.dataset.id);
+        
+        if (this.state.editTask !== '') {
+
+            const editTasks = this.state.tasks.map(item => {
+                if (id === item.id) {
+                    item.name = this.state.editTask,
+                    item.edit = !item.edit
+                }
+                return item
+            })
+
+            this.setState({
+                tasks: editTasks,
+                editTask: ''
+            })
+        }
+    }
+
+    handleRemoveClick = e => {
+        const id = Number(e.target.dataset.id);
+        const newTasks = this.state.tasks.filter(item => {
+            if (!item.done) {
+               return id !== item.id
+            } 
+        })
+
+        this.setState({
+            tasks: newTasks
+        })
+    }
+
+    render() {
+        let editable;
+        this.state.tasks.map(item => {
+            if (item.edit === true) {
+                editable = (
+                    <form key={item.id} onSubmit={this.editSubmit} data-id={item.id} className={item.edit ? 'btn-edit' : 'none', !item.done ? '' : 'none' }>
+                        <input type='text' value={this.state.editTask } onChange={this.editChange} placeholder={item.name} />
+                        <button>Zapisz</button>
+                    </form>
+                )
+                return
+            }
+        })
+
+        const list = this.state.tasks.map(
+            task => (<li data-id={task.id} onClick={this.changeDone} key={task.id} className={task.done ? 'done' : ''}>
+                {task.name}
+                <button className={task.done ? 'none' : 'btn-edit'} onClick={this.clickEdit}>{task.edit ? 'Anuluj' : 'Edytuj'}</button>
+                {task.edit ? editable : null}
+            </li>)
+        );
+        
+        return (
+            <div className="toDoList">
+                <button onClick={this.handleRemoveClick}>Usuń</button>
+                <form className="header" onSubmit={this.handleSubmit}>
+                    <h2>Lista zadań</h2>
+                    <div className="inputs">
+                        <input type="text" value={this.state.newTask} placeholder="Wpisz zadanie do wykonania" onChange={this.handleChange}/>
+                        <button className="btn-add">Dodaj</button>
+                    </div>
+                </form>
+
+                <ul>
+                    {list}
+                </ul>
+            </div>
+        )
+    }
+}
+
+
+const App = () => <ToDoList />
+
+ReactDOM.render(<App />, document.getElementById("app"));
