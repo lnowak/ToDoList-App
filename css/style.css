@@ -157,8 +157,8 @@
     align-items: center;
     padding: 10px;
     width: 25%;
-    background: #d6d1d1;
-    color: #555;
+    background: #ff0000;
+    color: rgb(255, 255, 255);
     font-size: 15px;
     cursor: pointer;
     transition: 0.3s;
@@ -167,5 +167,5 @@
 }
 
 .removeButton:hover {
-    background-color: #bbb;
+    background-color: rgb(184, 12, 12);
 }
