@@ -7,7 +7,7 @@ class ToDoList extends Component {
             id: 1,
             name: "Sprzątanie domu",
             done: false, 
-            edit: false
+            edit: false,
           }],
         newTask: '',
         editTask: ''
@@ -31,7 +31,7 @@ class ToDoList extends Component {
             };
             this.state.tasks.map(item => {
                 if(newTask.id === item.id) {
-                    newTask.id += 1
+                    return newTask.id += this.state.tasks.length;
                 }
             })
             this.setState({
@@ -63,12 +63,16 @@ class ToDoList extends Component {
             if(item.id === id) {
                 item.edit = !item.edit
             }
+            if(item.id !== id) {
+                item.edit = false
+            }
             return item;
         });
 
         this.setState({
             tasks: editTasks,
-        })
+            editTask: ''
+        });
     }
 
     editChange = e => {
@@ -82,7 +86,6 @@ class ToDoList extends Component {
         const id = Number(e.target.dataset.id);
         
         if (this.state.editTask !== '') {
-
             const editTasks = this.state.tasks.map(item => {
                 if (id === item.id) {
                     item.name = this.state.editTask,
@@ -112,13 +115,13 @@ class ToDoList extends Component {
     }
 
     render() {
-        let editable;
+        let editInput;
         this.state.tasks.map(item => {
             if (item.edit === true) {
-                editable = (
-                    <form key={item.id} onSubmit={this.editSubmit} data-id={item.id} className={item.edit ? 'btn-edit' : 'none', !item.done ? '' : 'none' }>
+                editInput = (
+                    <form key={item.id} onSubmit={this.editSubmit} data-id={item.id} className={item.edit ? '' : 'none', !item.done ? 'ds' : 'none' }>
                         <input type='text' value={this.state.editTask } onChange={this.editChange} placeholder={item.name} />
-                        <button>Zapisz</button>
+                        <button className='btn-edit'>Zapisz</button>
                     </form>
                 )
                 return
@@ -126,24 +129,26 @@ class ToDoList extends Component {
         })
 
         const list = this.state.tasks.map(
-            task => (<li data-id={task.id} onClick={this.changeDone} key={task.id} className={task.done ? 'done' : ''}>
+            task => (<li data-id={task.id} onClick={this.changeDone} key={task.id} className={task.done ? 'done' : 'listItems'}>
                 {task.name}
                 <button className={task.done ? 'none' : 'btn-edit'} onClick={this.clickEdit}>{task.edit ? 'Anuluj' : 'Edytuj'}</button>
-                {task.edit ? editable : null}
+                {task.edit ? editInput : null}
             </li>)
         );
         
         return (
             <div className="toDoList">
-                <button onClick={this.handleRemoveClick}>Usuń</button>
+                
                 <form className="header" onSubmit={this.handleSubmit}>
-                    <h2>Lista zadań</h2>
+                    <div className="headerTitle">
+                        <h2>Lista zadań</h2>
+                        <button onClick={this.handleRemoveClick} className='removeButton'>Usuń</button>
+                    </div>
                     <div className="inputs">
                         <input type="text" value={this.state.newTask} placeholder="Wpisz zadanie do wykonania" onChange={this.handleChange}/>
                         <button className="btn-add">Dodaj</button>
                     </div>
                 </form>
-
                 <ul>
                     {list}
                 </ul>
@@ -152,7 +157,5 @@ class ToDoList extends Component {
     }
 }
 
-
 const App = () => <ToDoList />
-
 ReactDOM.render(<App />, document.getElementById("app"));

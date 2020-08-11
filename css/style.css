@@ -31,6 +31,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
     padding: 4px 40px 4px 40px;
     background: #eee;
     font-size: 18px;
@@ -111,6 +112,10 @@
     border: 0;
 }
 
+.toDoList .btn-add:hover {
+    background-color: #bbb;
+}
+
 .none {
     display: none;
 }
@@ -129,6 +134,38 @@
     border: 0;
 }
 
-.toDoList .btn-add:hover {
+.toDoList .btn-edit:hover {
+    background-color: #bbb;
+}
+
+.ds {
+    display: flex;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.headerTitle {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.removeButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    width: 25%;
+    background: #d6d1d1;
+    color: #555;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 0;
+    margin-left: 25%;
+}
+
+.removeButton:hover {
     background-color: #bbb;
 }
