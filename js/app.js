@@ -119,7 +119,7 @@ class ToDoList extends Component {
         this.state.tasks.map(item => {
             if (item.edit === true) {
                 editInput = (
-                    <form key={item.id} onSubmit={this.editSubmit} data-id={item.id} className={item.edit ? '' : 'none', !item.done ? 'ds' : 'none' }>
+                    <form key={item.id} onSubmit={this.editSubmit} data-id={item.id} className={item.edit ? '' : 'none', !item.done ? 'formActive' : 'none' }>
                         <input type='text' value={this.state.editTask } onChange={this.editChange} placeholder={item.name} />
                         <button className='btn-edit'>Zapisz</button>
                     </form>
