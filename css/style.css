@@ -211,6 +211,14 @@
     width: 100%;
 }
 
+.visibleLi {
+    background: rgb(255, 255, 255);
+    font-size: 18px;
+    padding: 5px 0 5px 0;
+    display: flex;
+    justify-content: center;
+}
+
 .toDoList ul li {
     cursor: pointer;
     position: relative;

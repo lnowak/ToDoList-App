@@ -3,12 +3,7 @@ import ReactDOM from "react-dom";
 
 class ToDoList extends Component {
     state = {
-        tasks: [{
-            id: 1,
-            name: "Sprzątanie domu",
-            done: false, 
-            edit: false,
-          }],
+        tasks: [],
         newTask: '',
         editTask: ''
     }
@@ -102,16 +97,40 @@ class ToDoList extends Component {
     }
 
     handleRemoveClick = e => {
+        e.preventDefault();
         const id = Number(e.target.dataset.id);
         const newTasks = this.state.tasks.filter(item => {
             if (!item.done) {
-               return id !== item.id
+               id !== item.id
+               return item
             } 
+            
         })
 
         this.setState({
             tasks: newTasks
         })
+    }
+
+    sessionCleared = e => {
+        localStorage.clear();
+        this.setState({
+            tasks: []
+        })
+    }
+
+    componentDidMount() {
+        if (localStorage.getItem('user')) {
+            const data = JSON.parse(localStorage.getItem('user')).tasks;
+            this.setState({
+                tasks: [...data],
+            })
+        } 
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        localStorage.setItem('user', JSON.stringify(nextState))
+        console.log(localStorage)
     }
 
     render() {
@@ -136,9 +155,12 @@ class ToDoList extends Component {
             </li>)
         );
         
+        let liClass = '';
+        this.state.tasks.length > 0 ? liClass='none' : liClass='visibleLi'
+
         return (
             <div className="toDoList">
-                
+                <button onClick={this.sessionCleared}>Wyczyść sesję</button>
                 <form className="header" onSubmit={this.handleSubmit}>
                     <div className="headerTitle">
                         <h2>Lista zadań</h2>
@@ -150,6 +172,7 @@ class ToDoList extends Component {
                     </div>
                 </form>
                 <ul>
+                    <p className={liClass}>Tutaj pojawi się Twoja lista zadań</p>
                     {list}
                 </ul>
             </div>
