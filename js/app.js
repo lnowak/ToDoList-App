@@ -124,13 +124,14 @@ class ToDoList extends Component {
             const data = JSON.parse(localStorage.getItem('user')).tasks;
             this.setState({
                 tasks: [...data],
-            })
+            });
         } 
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        localStorage.setItem('user', JSON.stringify(nextState))
-        console.log(localStorage)
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState !== this.state) {
+            localStorage.setItem('user', JSON.stringify(this.state));
+        }
     }
 
     render() {
@@ -160,17 +161,20 @@ class ToDoList extends Component {
 
         return (
             <div className="toDoList">
-                <button onClick={this.sessionCleared}>Wyczyść sesję</button>
                 <form className="header" onSubmit={this.handleSubmit}>
                     <div className="headerTitle">
                         <h2>Lista zadań</h2>
-                        <button onClick={this.handleRemoveClick} className='removeButton'>Usuń</button>
+                        {/* <button onClick={this.handleRemoveClick} className='removeButton'>Usuń</button> */}
                     </div>
                     <div className="inputs">
                         <input type="text" value={this.state.newTask} placeholder="Wpisz zadanie do wykonania" onChange={this.handleChange}/>
                         <button className="btn-add">Dodaj</button>
                     </div>
                 </form>
+                <div className='removeButtons'>
+                    <button onClick={this.sessionCleared} className='removeButton'>Wyczyść</button>
+                    <button onClick={this.handleRemoveClick} className='removeButton'>Usuń</button>
+                </div>
                 <ul>
                     <p className={liClass}>Tutaj pojawi się Twoja lista zadań</p>
                     {list}
