@@ -141,7 +141,7 @@ class ToDoList extends Component {
                 editInput = (
                     <form key={item.id} onSubmit={this.editSubmit} data-id={item.id} className={item.edit ? '' : 'none', !item.done ? 'formActive' : 'none' }>
                         <input type='text' value={this.state.editTask } onChange={this.editChange} placeholder={item.name} />
-                        <button className='btn-edit'>Zapisz</button>
+                        <button className='btn btn-edit'>Zapisz</button>
                     </form>
                 )
                 return
@@ -151,7 +151,7 @@ class ToDoList extends Component {
         const list = this.state.tasks.map(
             task => (<li data-id={task.id} onClick={this.changeDone} key={task.id} className={task.done ? 'done' : 'listItems'}>
                 {task.name}
-                <button className={task.done ? 'none' : 'btn-edit'} onClick={this.clickEdit}>{task.edit ? 'Anuluj' : 'Edytuj'}</button>
+                <button className={task.done ? 'none' : 'btn btn-edit'} onClick={this.clickEdit}>{task.edit ? 'Anuluj' : 'Edytuj'}</button>
                 {task.edit ? editInput : null}
             </li>)
         );
@@ -168,12 +168,12 @@ class ToDoList extends Component {
                     </div>
                     <div className="inputs">
                         <input type="text" value={this.state.newTask} placeholder="Wpisz zadanie do wykonania" onChange={this.handleChange}/>
-                        <button className="btn-add">Dodaj</button>
+                        <button className="btn btn-add">Dodaj</button>
                     </div>
                 </form>
                 <div className='removeButtons'>
-                    <button onClick={this.sessionCleared} className='removeButton'>Wyczyść</button>
-                    <button onClick={this.handleRemoveClick} className='removeButton'>Usuń</button>
+                    <button onClick={this.sessionCleared} className='btn removeButton'>Wyczyść</button>
+                    <button onClick={this.handleRemoveClick} className='btn removeButton'>Usuń</button>
                 </div>
                 <ul>
                     <p className={liClass}>Tutaj pojawi się Twoja lista zadań</p>

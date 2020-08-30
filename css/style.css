@@ -180,19 +180,22 @@
     border: none;
 }
 
-.removeButton {
+.btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 11px;
+    padding: 10px;
     width: 25%;
-    background: #ff0000;
-    color: rgb(255, 255, 255);
     font-size: 15px;
     cursor: pointer;
     transition: 0.3s;
     border: 0;
     right: 0;
+}
+
+.removeButton {
+    background: #ff0000;
+    color: rgb(255, 255, 255);
 }
 
 .removeButton:hover {
@@ -215,17 +218,8 @@
 }
 
 .btn-add {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    width: 25%;
     background: #d9d9d9;
     color: #555;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-    border: 0;
 }
 
 .btn-add:hover {
@@ -296,17 +290,8 @@
 }
 
 .btn-edit {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    width: 25%;
     background: #d6d1d1;
     color: #555;
-    font-size: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-    border: 0;
 }
 
 .toDoList .btn-edit:hover {
