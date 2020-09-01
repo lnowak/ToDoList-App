@@ -1,3 +1,4 @@
 # ToDoList
 
-Wersja live: https://lnowak.github.io/ToDoList-App/
+
+Live Demo: https://lnowak.github.io/ToDoList-App/
